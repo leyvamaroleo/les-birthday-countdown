@@ -10,7 +10,7 @@ const LIMIT_DATE = {
   day: 30,
 };
 
-export const Countdown = () => {
+export const Countdown = ({ onReachLimitTime }) => {
   const [countdown, setCountdown] = useState(null);
   const [isLimitTime, setIsLimitTime] = useState(false);
 
@@ -26,6 +26,7 @@ export const Countdown = () => {
     ) {
       setCountdown({ seconds: 0, minutes: 0, hours: 0, days: 0 });
       setIsLimitTime(true);
+      onReachLimitTime()
       return;
     }
 
@@ -45,7 +46,7 @@ export const Countdown = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [onReachLimitTime]);
 
   if (!countdown) return null;
 
