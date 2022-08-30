@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
+import { Gallery } from "../Gallery";
 
 import "./styles.css";
 
@@ -10,6 +12,7 @@ const LIMIT_DATE = {
 
 export const Countdown = () => {
   const [countdown, setCountdown] = useState(null);
+  const [isLimitTime, setIsLimitTime] = useState(false);
 
   useEffect(() => {
     const [currentMonth, currentDay, currentYear] = new Date()
@@ -22,6 +25,7 @@ export const Countdown = () => {
       currentDay >= LIMIT_DATE.day
     ) {
       setCountdown({ seconds: 0, minutes: 0, hours: 0, days: 0 });
+      setIsLimitTime(true);
       return;
     }
 
@@ -46,35 +50,35 @@ export const Countdown = () => {
   if (!countdown) return null;
 
   return (
-    <section className="countdown">
-      <div className="countdown-container-cell">
-        <div className="countdown-time">
-          <h2>Days</h2>
-          <p>{countdown.days}</p>
+    <>
+      <section className="countdown">
+        <div className="countdown-container-cell">
+          <div className="countdown-time">
+            <h2>Days</h2>
+            <p>{countdown.days}</p>
+          </div>
         </div>
-      </div>
-      <div className="countdown-container-cell">
-        <div className="countdown-time">
-          <h2>Hours</h2>
-          <p>{countdown.hours}</p>
+        <div className="countdown-container-cell">
+          <div className="countdown-time">
+            <h2>Hours</h2>
+            <p>{countdown.hours}</p>
+          </div>
         </div>
-      </div>
-      <div className="countdown-container-cell">
-        <div className="countdown-time">
-          <h2>Minutes</h2>
-          <p>{countdown.minutes}</p>
+        <div className="countdown-container-cell">
+          <div className="countdown-time">
+            <h2>Minutes</h2>
+            <p>{countdown.minutes}</p>
+          </div>
         </div>
-      </div>
-      <div className="countdown-container-cell">
-        <div className="countdown-time">
-          <h2>Secs</h2>
-          <p>{countdown.seconds}</p>
+        <div className="countdown-container-cell">
+          <div className="countdown-time">
+            <h2>Secs</h2>
+            <p>{countdown.seconds}</p>
+          </div>
         </div>
-      </div>
-
-      {/* <div>
-        <img src={IMG_ONE} alt="" className="overlay-image" />
-      </div> */}
-    </section>
+      </section>
+      {isLimitTime && <Gallery />}
+      {isLimitTime && <Confetti />}
+    </>
   );
 };
